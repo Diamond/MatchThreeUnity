@@ -476,6 +476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff8f11f8fc744974b8a580512cc8e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileController: {fileID: 0}
+  tcScript: {fileID: 0}
 --- !u!61 &1720841020
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -568,6 +570,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 400000, guid: 6b94b8fd1a9a94834bc8425dbad35b3b, type: 2}
   tiles: []
+  selectedTile: {fileID: 0}
+  jitterCorrection: 1
 --- !u!4 &1857800661
 Transform:
   m_ObjectHideFlags: 0
