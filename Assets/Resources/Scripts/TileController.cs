@@ -65,10 +65,10 @@ public class TileController : MonoBehaviour {
 			Vector3 newPosition = Input.mousePosition;
 			if (newPosition.y > _startPosition.y) {
 				// Move down
-
 				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
 				if (dy > jitterCorrection) {
 					Debug.Log ("up");
+					selectedTile.rigidbody2D.velocity = new Vector3(0.0f, 1.0f, 0.0f);
 				}
 			}
 			if (newPosition.y < _startPosition.y) {
@@ -76,6 +76,7 @@ public class TileController : MonoBehaviour {
 				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
 				if (dy > jitterCorrection) {
 					Debug.Log ("down");
+					selectedTile.rigidbody2D.velocity = new Vector3(0.0f, -1.0f, 0.0f);
 				}
 			}
 			if (newPosition.x < _startPosition.x) {
@@ -83,6 +84,7 @@ public class TileController : MonoBehaviour {
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
 					Debug.Log ("Left");
+					selectedTile.rigidbody2D.velocity = new Vector3(-1.0f, 0.0f, 0.0f);
 				}
 			}
 			if (newPosition.x > _startPosition.x) {
@@ -90,6 +92,7 @@ public class TileController : MonoBehaviour {
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
 					Debug.Log ("Right");
+					selectedTile.rigidbody2D.velocity = new Vector3(1.0f, 0.0f, 0.0f);
 				}
 			}
 		}

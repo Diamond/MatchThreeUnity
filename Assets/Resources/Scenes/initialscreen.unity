@@ -571,7 +571,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 400000, guid: 6b94b8fd1a9a94834bc8425dbad35b3b, type: 2}
   tiles: []
   selectedTile: {fileID: 0}
-  jitterCorrection: 1
+  jitterCorrection: 10
 --- !u!4 &1857800661
 Transform:
   m_ObjectHideFlags: 0
