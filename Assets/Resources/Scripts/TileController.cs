@@ -99,7 +99,10 @@ public class TileController : MonoBehaviour {
 
 	void SlideRight(int row, int col)
 	{
-
+		Debug.Log ("Sliding Right");
+		for (int x = 0; x < 8; x++) {
+			_tileMap[row, x].GetComponent<Tile>().MoveRight();
+		}
 	}
 
 	void SlideUp(int row, int col)
@@ -154,6 +157,7 @@ public class TileController : MonoBehaviour {
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
 					Debug.Log ("Right");
+					SlideRight ((int)rowAndCol.y, (int)rowAndCol.x);
 				}
 			}
 		}
@@ -185,7 +189,7 @@ public class TileController : MonoBehaviour {
 	{
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				if (_tileMap[y,x].GetComponent<Tile>().isMovingLeft) {
+				if (_tileMap[y,x].GetComponent<Tile>().IsMoving ()) {
 					return false;
 				}
 			}
