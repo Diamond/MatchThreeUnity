@@ -25,7 +25,11 @@ public class Tile : MonoBehaviour {
 
 	public void StopMoving()
 	{
-		isMovingLeft = false;
+		if (isMovingLeft) {
+			int xMapPos = Mathf.Abs((int)((this.transform.position.x + 2.35f) / 0.67f));
+			this.transform.position = new Vector3(-2.35f + (float)xMapPos * 0.67f, this.transform.position.y, this.transform.position.z);
+			isMovingLeft = false;
+		}
 	}
 
 	void Update()
@@ -51,5 +55,13 @@ public class Tile : MonoBehaviour {
 		if (neighbors.Contains(n)) {
 			neighbors.Remove(n);
 		}
+	}
+
+	public Vector3 Center()
+	{
+		float cx = this.transform.position.x + 0.67f / 2.0f;
+		float cy = this.transform.position.y + 0.67f / 2.0f;
+		float cz = 0.0f;
+		return new Vector3(cx, cy, cz);
 	}
 }
