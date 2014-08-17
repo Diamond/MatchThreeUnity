@@ -14,6 +14,8 @@ public class TileController : MonoBehaviour {
 
 	public float jitterCorrection = 0.5f;
 
+	public bool waitingToUnlock = false;
+
 	// Use this for initialization
 	void Start () {
 		Input.simulateMouseWithTouches = true;
@@ -28,7 +30,7 @@ public class TileController : MonoBehaviour {
 			for (int x = 0; x < 8; x++) {
 				var newTile = Instantiate(tilePrefab) as Transform;
 				float startX = -2.35f;
-				float startY = 2.5f;
+				float startY = -1.0f;
 				float size   = 0.67f;
 				newTile.position = new Vector3(startX + (size * x), startY + (size * y), 1);
 				randColor = Random.Range (0, 4);
@@ -59,11 +61,55 @@ public class TileController : MonoBehaviour {
 	{
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				if (_tileMap[y,x] == selectedTile) {
+				if (_tileMap[y,x].GetComponent<Tile>() == selectedTile) {
 					return new Vector2(x, y);
 				}
 			}
 		}
+		return Vector2.zero;
+	}
+
+	void LockGravity()
+	{
+		// LOCK COLUMN
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				_tileMap[y,x].rigidbody2D.isKinematic = true;
+			}
+		}
+	}
+
+	void UnlockGravity()
+	{
+		// LOCK COLUMN
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				_tileMap[y,x].rigidbody2D.isKinematic = false;
+			}
+		}
+	}
+
+	void SlideLeft(int row, int col)
+	{
+		Debug.Log ("Sliding Left");
+		for (int x = 0; x < 8; x++) {
+			_tileMap[row, x].GetComponent<Tile>().MoveLeft();
+		}
+	}
+
+	void SlideRight(int row, int col)
+	{
+
+	}
+
+	void SlideUp(int row, int col)
+	{
+
+	}
+
+	void SlideDown(int row, int col)
+	{
+
 	}
 
 	void Update()
@@ -72,6 +118,7 @@ public class TileController : MonoBehaviour {
 			if (!_isTouching) {
 				_isTouching = true;
 				_startPosition = Input.mousePosition;
+				LockGravity();
 			}
 		}
 		if (_isTouching && Input.mousePosition != _startPosition) {
@@ -82,7 +129,6 @@ public class TileController : MonoBehaviour {
 				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
 				if (dy > jitterCorrection) {
 					Debug.Log ("up");
-					selectedTile.rigidbody2D.velocity = new Vector3(0.0f, 1.0f, 0.0f);
 				}
 			}
 			if (newPosition.y < _startPosition.y) {
@@ -91,7 +137,6 @@ public class TileController : MonoBehaviour {
 				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
 				if (dy > jitterCorrection) {
 					Debug.Log ("down");
-					selectedTile.rigidbody2D.velocity = new Vector3(0.0f, -1.0f, 0.0f);
 				}
 			}
 			if (newPosition.x < _startPosition.x) {
@@ -99,8 +144,8 @@ public class TileController : MonoBehaviour {
 				// Move left
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
-					Debug.Log ("Left");
-					selectedTile.rigidbody2D.velocity = new Vector3(-1.0f, 0.0f, 0.0f);
+					Debug.Log ("Preparing to move at (" + (rowAndCol.x).ToString() + "," + (rowAndCol.y).ToString());
+					SlideLeft ((int)rowAndCol.y, (int)rowAndCol.x);
 				}
 			}
 			if (newPosition.x > _startPosition.x) {
@@ -109,14 +154,42 @@ public class TileController : MonoBehaviour {
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
 					Debug.Log ("Right");
-					selectedTile.rigidbody2D.velocity = new Vector3(1.0f, 0.0f, 0.0f);
 				}
 			}
 		}
 		if (Input.GetMouseButtonUp(0)) {
 			if (_isTouching) {
 				_isTouching = false;
+				waitingToUnlock = true;
+				StopAllMoving();
 			}
 		}
+		if (waitingToUnlock) {
+			if (SafeToMove()) {
+				waitingToUnlock = false;
+				UnlockGravity();
+			}
+		}
+	}
+
+	public void StopAllMoving()
+	{
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				_tileMap[y,x].GetComponent<Tile>().StopMoving();
+			}
+		}
+	}
+
+	bool SafeToMove()
+	{
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				if (_tileMap[y,x].GetComponent<Tile>().isMovingLeft) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

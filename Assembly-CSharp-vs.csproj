@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\FeelerScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Tile.cs" />
      <Compile Include="Assets\Resources\Scripts\TileController.cs" />
   </ItemGroup>
