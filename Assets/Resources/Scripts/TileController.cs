@@ -180,7 +180,7 @@ public class TileController : MonoBehaviour {
 				// Move right
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
-					SlideRight();
+					SlideRight ();
 				}
 			}
 		}
