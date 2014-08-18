@@ -39,8 +39,6 @@ public class Tile : MonoBehaviour {
 		}
 		if (isMovingRight) {
 			int xMapPos = Mathf.Abs((int)((this.transform.position.x + 2.35f) / 0.67f + 1.0f));
-			Debug.Log ("Pos: " + ((this.transform.position.x + 2.35f) / 0.67f + 1.0f).ToString());
-			Debug.Log ("Snap Right: " + xMapPos.ToString ());
 			this.transform.position = new Vector3(-2.35f + (float)xMapPos * 0.67f, this.transform.position.y, this.transform.position.z);
 			isMovingRight = false;
 		}
