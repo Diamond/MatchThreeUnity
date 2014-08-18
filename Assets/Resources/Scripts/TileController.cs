@@ -33,7 +33,7 @@ public class TileController : MonoBehaviour {
 				float startY = -1.0f;
 				float size   = 0.67f;
 				newTile.position = new Vector3(startX + (size * x), startY + (size * y), 1);
-				randColor = Random.Range (0, 4);
+				randColor = Random.Range (0, 5);
 				if (randColor == 1) {
 					// GREEN
 					newColor = new Color(0.0f, 1.0f, 0.0f);
@@ -52,6 +52,7 @@ public class TileController : MonoBehaviour {
 				}
 				newTile.GetComponent<SpriteRenderer>().color = newColor;
 				newTile.GetComponent<Tile>().tcScript = this;
+				newTile.parent = this.transform;
 				_tileMap[y,x] = newTile;
 			}
 		}

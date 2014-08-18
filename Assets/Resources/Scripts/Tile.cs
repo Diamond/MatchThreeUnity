@@ -36,12 +36,12 @@ public class Tile : MonoBehaviour {
 			int xMapPos = Mathf.Abs((int)((this.transform.position.x + 2.35f) / 0.67f));
 			this.transform.position = new Vector3(-2.35f + (float)xMapPos * 0.67f, this.transform.position.y, this.transform.position.z);
 			isMovingLeft = false;
-			isMovingRight = false;
 		}
 		if (isMovingRight) {
-			int xMapPos = Mathf.Abs((int)((this.transform.position.x + 2.35f + 0.335f) / 0.67f));
+			int xMapPos = Mathf.Abs((int)((this.transform.position.x + 2.35f) / 0.67f + 1.0f));
+			Debug.Log ("Pos: " + ((this.transform.position.x + 2.35f) / 0.67f + 1.0f).ToString());
+			Debug.Log ("Snap Right: " + xMapPos.ToString ());
 			this.transform.position = new Vector3(-2.35f + (float)xMapPos * 0.67f, this.transform.position.y, this.transform.position.z);
-			isMovingLeft = false;
 			isMovingRight = false;
 		}
 	}
@@ -66,8 +66,8 @@ public class Tile : MonoBehaviour {
 			this.transform.position -= new Vector3(vel, 0.0f, 0.0f);
 		}
 		if (isMovingRight) {
-			if (this.transform.position.x >= -2.35f + 7.0f * 0.67f) {
-				this.transform.position = new Vector3(-2.35f, this.transform.position.y, 0.0f);
+			if (this.transform.position.x >= (2.35)) {
+				this.transform.position = new Vector3(-2.35f - 0.67f, this.transform.position.y, 0.0f);
 			}
 			this.transform.position -= new Vector3(-vel, 0.0f, 0.0f);
 		}
