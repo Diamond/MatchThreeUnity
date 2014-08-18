@@ -12,6 +12,11 @@ public class Tile : MonoBehaviour {
 	public bool isMovingUp    = false;
 	public bool isMovingDown  = false;
 
+	public Tile topNeighbor;
+	public Tile bottomNeighbor;
+	public Tile leftNeighbor;
+	public Tile rightNeighbor;
+
 	void Start()
 	{
 		_isTouched = false;
@@ -30,6 +35,14 @@ public class Tile : MonoBehaviour {
 		isMovingRight = true;
 	}
 
+	public void MoveUp() {
+		isMovingUp = true;
+	}
+
+	public void MoveDown() {
+		isMovingDown = true;
+	}
+
 	public void StopMoving()
 	{
 		if (isMovingLeft) {
@@ -42,21 +55,19 @@ public class Tile : MonoBehaviour {
 			this.transform.position = new Vector3(-2.35f + (float)xMapPos * 0.67f, this.transform.position.y, this.transform.position.z);
 			isMovingRight = false;
 		}
-	}
-
-	void PerformLeftMove()
-	{
-		float vel = 0.67f * Time.deltaTime * 2;
-		if (this.transform.position.x <= -2.35f) {
-			this.transform.position = new Vector3(-2.35f + (8.0f * 0.67f), this.transform.position.y, 0.0f);
+		if (isMovingUp) {
+			isMovingUp = false;
 		}
-		this.transform.position -= new Vector3(vel, 0.0f, 0.0f);
-
+		if (isMovingDown) {
+//			int yMapPos = Mathf.Abs((int)((this.transform.position.y - 0.5f) / 0.67f));
+//			this.transform.position = new Vector3(this.transform.position.x, 0.5f - (float)yMapPos * 0.67f, this.transform.position.z);
+			isMovingDown = false;
+		}
 	}
 
 	void Update()
 	{
-		float vel = 0.67f * Time.deltaTime * 2;
+		float vel = 0.67f * Time.deltaTime * 5;
 		if (isMovingLeft) {
 			if (this.transform.position.x <= -2.35f) {
 				this.transform.position = new Vector3(-2.35f + (8.0f * 0.67f), this.transform.position.y, 0.0f);
@@ -68,6 +79,18 @@ public class Tile : MonoBehaviour {
 				this.transform.position = new Vector3(-2.35f - 0.67f, this.transform.position.y, 0.0f);
 			}
 			this.transform.position -= new Vector3(-vel, 0.0f, 0.0f);
+		}
+		if (isMovingUp) {
+			if (this.transform.position.y >= 0.5f) {
+				this.transform.position = new Vector3(this.transform.position.x, -4.67f, 0.0f);
+			}
+			this.transform.position += new Vector3(0.0f, vel, 0.0f);
+		}
+		if (isMovingDown) {
+			if (this.transform.position.y <= -4.0f) {
+				this.transform.position = new Vector3(this.transform.position.x, 1.17f, 0.0f);
+			}
+			this.transform.position -= new Vector3(0.0f, vel, 0.0f);
 		}
 	}
 

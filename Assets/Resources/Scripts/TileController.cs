@@ -16,6 +16,8 @@ public class TileController : MonoBehaviour {
 
 	public bool waitingToUnlock = false;
 
+	public Transform floor;
+
 	// Use this for initialization
 	void Start () {
 		Input.simulateMouseWithTouches = true;
@@ -90,30 +92,56 @@ public class TileController : MonoBehaviour {
 		}
 	}
 
-	void SlideLeft(int row, int col)
+	void SlideLeft()
 	{
-		Debug.Log ("Sliding Left");
-		for (int x = 0; x < 8; x++) {
-			_tileMap[row, x].GetComponent<Tile>().MoveLeft();
+		Tile start = selectedTile;
+		while (start.leftNeighbor != null) {
+			start = start.leftNeighbor;
+		}
+		Tile i = start;
+		while (i != null) {
+			i.MoveLeft();
+			i = i.rightNeighbor;
 		}
 	}
 
-	void SlideRight(int row, int col)
+	void SlideRight()
 	{
-		Debug.Log ("Sliding Right");
-		for (int x = 0; x < 8; x++) {
-			_tileMap[row, x].GetComponent<Tile>().MoveRight();
+		Tile start = selectedTile;
+		while (start.rightNeighbor != null) {
+			start = start.rightNeighbor;
+		}
+		Tile i = start;
+		while (i != null) {
+			i.MoveRight();
+			i = i.leftNeighbor;
 		}
 	}
 
-	void SlideUp(int row, int col)
+	void SlideUp()
 	{
-
+		Tile start = selectedTile;
+		while (start.topNeighbor != null) {
+			start = start.topNeighbor;
+		}
+		Tile i = start;
+		while (i != null) {
+			i.MoveUp();
+			i = i.bottomNeighbor;
+		}
 	}
 
-	void SlideDown(int row, int col)
+	void SlideDown()
 	{
-
+		Tile start = selectedTile;
+		while (start.bottomNeighbor != null) {
+			start = start.bottomNeighbor;
+		}
+		Tile i = start;
+		while (i != null) {
+			i.MoveDown();
+			i = i.topNeighbor;
+		}
 	}
 
 	void Update()
@@ -128,37 +156,31 @@ public class TileController : MonoBehaviour {
 		if (_isTouching && Input.mousePosition != _startPosition) {
 			Vector3 newPosition = Input.mousePosition;
 			if (newPosition.y > _startPosition.y) {
-				Vector2 rowAndCol = GetRowAndColumn();
-				// Move down
-				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
-				if (dy > jitterCorrection) {
-					Debug.Log ("up");
-				}
-			}
-			if (newPosition.y < _startPosition.y) {
-				Vector2 rowAndCol = GetRowAndColumn();
 				// Move up
 				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
 				if (dy > jitterCorrection) {
-					Debug.Log ("down");
+					SlideUp ();
+				}
+			}
+			if (newPosition.y < _startPosition.y) {
+				// Move down
+				float dy = Mathf.Abs(newPosition.y - _startPosition.y);
+				if (dy > jitterCorrection) {
+					SlideDown ();
 				}
 			}
 			if (newPosition.x < _startPosition.x) {
-				Vector2 rowAndCol = GetRowAndColumn();
 				// Move left
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
-					Debug.Log ("Preparing to move at (" + (rowAndCol.x).ToString() + "," + (rowAndCol.y).ToString());
-					SlideLeft ((int)rowAndCol.y, (int)rowAndCol.x);
+					SlideLeft ();
 				}
 			}
 			if (newPosition.x > _startPosition.x) {
-				Vector2 rowAndCol = GetRowAndColumn();
 				// Move right
 				float dx = Mathf.Abs(newPosition.x - _startPosition.x);
 				if (dx > jitterCorrection) {
-					Debug.Log ("Right");
-					SlideRight ((int)rowAndCol.y, (int)rowAndCol.x);
+					SlideRight();
 				}
 			}
 		}
