@@ -34,7 +34,7 @@ GameObject:
   - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: Bottom Feeler
-  m_TagString: Untagged
+  m_TagString: Bottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,7 @@ GameObject:
   - 114: {fileID: 11400012}
   m_Layer: 0
   m_Name: Top Feeler
-  m_TagString: Untagged
+  m_TagString: Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: Right Feeler
-  m_TagString: Untagged
+  m_TagString: Right
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - 114: {fileID: 11400016}
   m_Layer: 0
   m_Name: Left Feeler
-  m_TagString: Untagged
+  m_TagString: Left
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,6 +358,10 @@ MonoBehaviour:
   isMovingRight: 0
   isMovingUp: 0
   isMovingDown: 0
+  topNeighbor: {fileID: 0}
+  bottomNeighbor: {fileID: 0}
+  leftNeighbor: {fileID: 0}
+  rightNeighbor: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
