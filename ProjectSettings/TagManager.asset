@@ -4,6 +4,10 @@
 TagManager:
   tags:
   - Box
+  - Left
+  - Top
+  - Right
+  - Bottom
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

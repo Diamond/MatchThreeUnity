@@ -16,7 +16,7 @@ public class FeelerScript : MonoBehaviour {
 		owner = this.transform.parent;
 		_ownerTile = owner.GetComponent<Tile>();
 		if (c.gameObject.tag == "Box") {
-			_ownerTile.AddNeighbor(c.GetComponent<Tile>());
+			AddNeighbor(c.GetComponent<Tile>());
 		}
 	}
 
@@ -25,7 +25,7 @@ public class FeelerScript : MonoBehaviour {
 		owner = this.transform.parent;
 		_ownerTile = owner.GetComponent<Tile>();
 		if (c.gameObject.tag == "Box") {
-			_ownerTile.AddNeighbor(c.GetComponent<Tile>());
+			AddNeighbor(c.GetComponent<Tile>());
 		}
 	}
 
@@ -34,7 +34,31 @@ public class FeelerScript : MonoBehaviour {
 		owner = this.transform.parent;
 		_ownerTile = owner.GetComponent<Tile>();
 		if (c.gameObject.tag == "Box") {
-			_ownerTile.RemoveNeighbor(c.GetComponent<Tile>());
+			RemoveNeighbor();
+		}
+	}
+
+	void AddNeighbor(Tile t) {
+		if (this.tag == "Left") {
+			_ownerTile.leftNeighbor = t;
+		} else if (this.tag == "Right") {
+			_ownerTile.rightNeighbor = t;
+		} else if (this.tag == "Top") {
+			_ownerTile.topNeighbor = t;
+		} else if (this.tag == "Bottom") {
+			_ownerTile.bottomNeighbor = t;
+		}
+	}
+
+	void RemoveNeighbor() {
+		if (this.tag == "Left") {
+			_ownerTile.leftNeighbor = null;
+		} else if (this.tag == "Right") {
+			_ownerTile.rightNeighbor = null;
+		} else if (this.tag == "Top") {
+			_ownerTile.topNeighbor = null;
+		} else if (this.tag == "Bottom") {
+			_ownerTile.bottomNeighbor = null;
 		}
 	}
 }
